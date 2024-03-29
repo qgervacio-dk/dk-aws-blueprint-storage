@@ -27,6 +27,7 @@ jobs:
             -backend-config="region=$REGION"
           terraform workspace select $ENV || terraform workspace new $ENV
           yq --prettyPrint $ENV.terraform.tfvars.yaml -o=json > terraform.tfvars.json || exit 1
-          terraform plan -out tfplan && terraform show -json tfplan | tf-summarize
-          terraform apply --auto-approve
-          terraform destroy --auto-approve
+          ls -lrta .
+          # terraform plan -out tfplan && terraform show -json tfplan | tf-summarize
+          # terraform apply --auto-approve
+          # terraform destroy --auto-approve
