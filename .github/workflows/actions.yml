@@ -6,8 +6,6 @@ jobs:
     environment: test-mmi
     env:
       ENV: dev 
-      PROVDIR: .prov
-      BPDIR: $PROVDIR/.bp
       REGION: ap-southeast-1
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -30,10 +28,10 @@ jobs:
           terraform -v
       - name: Create .env file
         run: |
-          mkdir -p $BPDIR
-          echo "TF_LOG=INFO" > $BPDIR/.env
+          mkdir -p .prov/.bp
+          echo "TF_LOG=INFO" > .prov/.bp/.env
       - name: Running init, plan, apply and destroy
         run: |
-          cp $ENV.terraform.tfvars.yaml $BPDIR
-          cd $PROVDIR
-          make i p a d workspace=$ENV bpdir=$BPDIR
+          cp $ENV.terraform.tfvars.yaml .prov/.bp
+          cd .prov
+          make i p a d workspace=$ENV bpdir=.bp
