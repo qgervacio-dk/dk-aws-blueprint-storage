@@ -11,6 +11,11 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
+        with:
+          repository: qgervacio-dk/dk-aws-provisioner-storage
+          path: .
+          ref: main
       - uses: mikefarah/yq@master
       - uses: kishaningithub/setup-tf-summarize@v2
       - uses: hashicorp/setup-terraform@v3
