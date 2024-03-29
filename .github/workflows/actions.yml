@@ -29,6 +29,7 @@ jobs:
           yq --prettyPrint test/$ENV.terraform.tfvars.yaml -o=json > terraform.tfvars.json || exit 1
 
   plan:
+    runs-on: ubuntu-latest
     steps:
       - run: |
           yq -V
