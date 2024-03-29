@@ -17,6 +17,4 @@ jobs:
       - run: yq -V
       - run: tf-summarize -v
       - run: terraform -v
-      - run: terraform init workspace=dev
-      - run: terraform workspace select dev || terraform workspace new dev
-      - run: yq --prettyPrint test/$dev.terraform.tfvars.yaml -o=json > terraform.tfvars.json || exit 1
+      - run: make init workspace=dev
