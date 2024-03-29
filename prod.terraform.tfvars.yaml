@@ -1,0 +1,19 @@
+common:
+  env: prod
+  region: ap-southeast-1
+
+storage:
+  s3:
+    # sensible default attributes of an s3 bucket
+    default:
+      name_prefix: tf-bprint-prov-demo-
+      acl: private
+      versioning: Disabled
+      object_ownership: ObjectWriter
+      control_object_ownership: true
+
+    # buckets
+    resources:
+      - name: bucket-abc
+        versioning: Enabled
+      - name: bucket-def
