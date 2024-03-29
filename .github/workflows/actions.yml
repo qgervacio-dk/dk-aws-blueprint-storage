@@ -28,6 +28,7 @@ jobs:
           terraform -v
       - name: Running init, plan, apply and destroy
         run: |
-          cp $ENV.terraform.tfvars.yaml .prov/
+          mkdir -p .prov/.bp
+          cp $ENV.terraform.tfvars.yaml .prov/.bp/
           cd .prov
-          make i p a d workspace=$ENV
+          make i p a d workspace=$ENV bpdir=.bp
