@@ -21,11 +21,13 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.7"
-      - run: |
+      - name: Testing required binaries
+        run: |
           yq -V
           tf-summarize -v
           terraform -v
-      - run: |
+      - name: Running init, plan, apply and destroy
+        run: |
           cp $ENV.terraform.tfvars.yaml .prov/
           cd .prov
           terraform init \
