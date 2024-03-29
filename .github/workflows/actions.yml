@@ -1,7 +1,7 @@
 name: Blueprin / Provisioner demo
 on: [push]
 jobs:
-  init:
+  run-all: # TODO
     runs-on: ubuntu-latest
     environment: test-mmi
     env:
@@ -26,12 +26,7 @@ jobs:
             -backend-config="key=tfstate/storage/$ENV" \
             -backend-config="region=$REGION"
           terraform workspace select $ENV || terraform workspace new $ENV
-          yq --prettyPrint test/$ENV.terraform.tfvars.yaml -o=json > terraform.tfvars.json || exit 1
-
-  plan:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          yq -V
-          tf-summarize -v
-          terraform -v
+          yq --prettyPrint $ENV.terraform.tfvars.yaml -o=json > terraform.tfvars.json || exit 1
+          terraform plan -out tfplan && terraform show -json tfplan | tf-summarize
+          terraform apply --auto-approve
+          terraform destroy --auto-approve
